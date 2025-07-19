@@ -10,6 +10,6 @@ interface GameRepository {
     suspend fun getGames(): Resource<List<Game>>
 
     //obtiene los detalles de un juego por su id o un estado de error/carga.
-    suspend fun getGameDetail(gameId: Int): Resource<GameDetail>
+    suspend fun getGameByID(gameId: Int): Resource<GameDetail>
 
 }

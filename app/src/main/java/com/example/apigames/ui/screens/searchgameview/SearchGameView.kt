@@ -72,7 +72,7 @@ fun SearchGameView(
         if (query.isNotEmpty()){
             val filterGames = games.filter { it.name.contains(query, ignoreCase = true) }
             filterGames.forEach {
-                Text(text = it.name?:"No existe",
+                Text(text = it.name,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 10.dp, start = 10.dp)

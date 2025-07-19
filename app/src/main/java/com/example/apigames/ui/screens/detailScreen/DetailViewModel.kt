@@ -2,7 +2,7 @@ package com.example.apigames.ui.screens.detailScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apigames.data.repository.GamesRepository
+import com.example.apigames.data.repository.GamesRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(private val repository: GamesRepository): ViewModel() {
+class DetailViewModel @Inject constructor(private val repository: GamesRepositoryImpl): ViewModel() {
 
     private val _uiStateDetail = MutableStateFlow(DetailState())
      val uiStateDetail = _uiStateDetail.asStateFlow()

@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 //Esta clase es responsable de obtener los datos de los juegos desde fuentes remotas (API).
 
-class GamesRepository @Inject constructor(private val apiGames: ApiGame) {
+class GamesRepositoryImpl @Inject constructor(private val apiGames: ApiGame) {
 
     suspend fun getGames(): List<GameList>? {
         val response = apiGames.getGames() // Ejecuta la llamada a la API.

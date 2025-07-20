@@ -12,12 +12,12 @@ import javax.inject.Inject
 
 class GamesRepositoryImpl @Inject constructor(private val apiGames: ApiGame): GameRepository {
 
-    override suspend fun getGames(): Resource<List<Game>> {
+    override suspend fun getGames(): Resource<List<Game>> { //La clase Resource retorna un tipo de dato generico en este cao una list
         return try {
             val response = apiGames.getGames() // Ejecuta la llamada a la API.
             if (response.isSuccessful) { // Comprueba si la respuesta HTTP fue exitosa (códigos 2xx).
-                val games = response.body()?.results?.map { it.toDomain() }?: emptyList()
-               Resource.Success(games) // Extrae la lista de juegos del cuerpo de la respuesta.
+                val games = response.body()?.results?.map { it.toDomain() }?: emptyList() //Mapear al modelo de dominio
+               Resource.Success(games) // Retorna la lista de juegos del cuerpo de la respuesta.
             }else {
                 Resource.Error("Error: ${response.code()}")
             }

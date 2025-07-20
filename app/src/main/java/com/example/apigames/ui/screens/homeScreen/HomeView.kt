@@ -43,7 +43,11 @@ fun HomeView(
 }
 
 @Composable
-fun ContentHomeView(homeViewModel: HomeViewModel, padding: PaddingValues, onClick:(Int)-> Unit){
+fun ContentHomeView(
+    homeViewModel: HomeViewModel,
+    padding: PaddingValues,
+    onClick:(Int)-> Unit
+){
     val uiState by homeViewModel.uiState.collectAsState()
     val listGames = uiState.listGames
 

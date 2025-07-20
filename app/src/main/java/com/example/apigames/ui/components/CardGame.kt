@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import com.example.apigames.data.remote.api.GameList
+import com.example.apigames.domain.model.Game
 
 @Composable
-fun CardGame(game: GameList, onclick:()-> Unit ){
+fun CardGame(game: Game, onclick:()-> Unit ){
     Card(
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
@@ -22,7 +22,7 @@ fun CardGame(game: GameList, onclick:()-> Unit ){
     ) {
         Column {
 
-            MainImage(image = game.background_image)
+            MainImage(image = game.backgroundImage)
         }
     }
 }

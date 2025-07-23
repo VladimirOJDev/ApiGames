@@ -7,15 +7,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.apigames.ui.navigation.AppDestinations.DetailView
-import com.example.apigames.ui.screens.homeScreen.HomeView
 import com.example.apigames.ui.screens.detailScreen.DetailView
+import com.example.apigames.ui.screens.homeScreen.HomeView
 import com.example.apigames.ui.screens.searchgameview.SearchGameView
 
 @Composable
-fun NavManager(
+fun AppNavGraph(
     navController: NavHostController = rememberNavController()
 ){
-
     NavHost(navController =  navController, startDestination = AppDestinations.HomeView){
         composable<AppDestinations.HomeView>{
             HomeView(
@@ -38,5 +37,4 @@ fun NavManager(
             )
         }
     }
-
 }

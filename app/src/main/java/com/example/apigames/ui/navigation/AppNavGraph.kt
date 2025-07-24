@@ -4,16 +4,17 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.apigames.ui.main.GameContentType
 import com.example.apigames.ui.navigation.AppDestinations.DetailView
-import com.example.apigames.ui.screens.detailScreen.DetailView
+import com.example.apigames.ui.screens.homeScreen.DetailView
 import com.example.apigames.ui.screens.homeScreen.HomeView
-import com.example.apigames.ui.screens.searchgameview.SearchGameView
+import com.example.apigames.ui.screens.homeScreen.SearchGameView
 
 @Composable
 fun AppNavGraph(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController,
+    contentType: GameContentType
 ){
     NavHost(navController =  navController, startDestination = AppDestinations.HomeView){
         composable<AppDestinations.HomeView>{

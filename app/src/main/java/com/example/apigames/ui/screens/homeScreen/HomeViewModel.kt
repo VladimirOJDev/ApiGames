@@ -9,11 +9,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.apigames.core.common.Resource
+import com.example.apigames.domain.use_case.GetGameByIdUseCase
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val getGameUseCase: GetGamesUseCase): ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val getGameUseCase: GetGamesUseCase,
+    private val getGameByIdUseCase:GetGameByIdUseCase
+
+): ViewModel(){
+
     private val _uiState = MutableStateFlow(HomeState())
-    val uiState= _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     init {
         fetchGames()
@@ -34,5 +40,36 @@ class HomeViewModel @Inject constructor(private val getGameUseCase: GetGamesUseC
                 // Resource.Loading podría no ser necesario aquí si es una operación inmediata
             }
         }
+    }
+
+    fun getGameById(id: Int){
+        viewModelScope.launch {
+            val result = getGameByIdUseCase(id)
+
+            when(result){
+                is Resource.Success ->{
+                    _uiState.value = _uiState.value.copy(
+                        name = result.data?.name ?: "null",
+                        descriptionRaw = result.data?.descriptionRaw ?: "",
+                        metaCritic = result.data?.metaCritic ?: 111, //llega hasta el 100 entonces 111 no tiene calificacion
+                        website = result.data?.website?: "Sin WebSite",
+                        backgroundImage = result.data?.backgroundImage?:""
+
+                    )
+                }
+                is Resource.Error ->{}
+                else -> {}
+            }
+        }
+    }
+
+    fun cleanState(){
+        _uiState.value = _uiState.value.copy(
+            name = "",
+            descriptionRaw =  "",
+            metaCritic = 111,
+            website = "",
+            backgroundImage = ""
+        )
     }
 }

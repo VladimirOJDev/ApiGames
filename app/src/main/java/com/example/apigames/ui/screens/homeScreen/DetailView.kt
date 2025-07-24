@@ -1,4 +1,4 @@
-package com.example.apigames.ui.screens.detailScreen
+package com.example.apigames.ui.screens.homeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,20 +34,20 @@ import com.example.apigames.ui.constans.UIConstanst.Companion.CUSTOM_BLACK
 @Composable
 fun DetailView(
     id: Int?,
-    detailViewModel: DetailViewModel = hiltViewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
     onClickBack:()-> Unit
 ){
 
-    val state by detailViewModel.uiStateDetail.collectAsState()
+    val state by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {//Se ejeecuta en un hilo secundario cada vez que id cambie su valor o cuando se iniicializa
         if (id != null)
-            detailViewModel.getGameById(id)
+            viewModel.getGameById(id)
     }
 
-    DisposableEffect(Unit){
+    DisposableEffect(Unit){//Se ejecuta cuando sale de compisable
         onDispose {
-            detailViewModel.cleanState()
+            viewModel.cleanState()
         }
     }
     Scaffold(
@@ -69,7 +69,7 @@ fun DetailView(
 
 @Composable
 fun ContentDetailView(
-    state: DetailState,
+    state: HomeState,
     padding: PaddingValues
 ){
 
@@ -103,19 +103,3 @@ fun ContentDetailView(
         )
     }
 }
-
-//@Preview
-//@Composable
-//fun Preview(){
-//    Scaffold(
-//        topBar = {
-//            MainTopBar(
-//                title = "",
-//                showBackButton = true,
-//                onClickBack = { }
-//            )
-//        }
-//    ){
-//        ContentDetailView(it)
-//    }
-//}

@@ -79,6 +79,8 @@ dependencies {
     //coild manejo de imagenes mas optimizadas de internet
     implementation(libs.coil.compose)
 
+    //WindowsSizeClass
+    implementation(libs.androidx.material3.window.size.class1)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -44,6 +44,5 @@ class GamesRepositoryImpl @Inject constructor(private val apiGames: ApiGame): Ga
         } catch (e: Exception) {
             Resource.Error("Exception: ${e.localizedMessage ?: "Unknown error"}") //Algo salio mal
         }
-
     }
 }

@@ -1,4 +1,4 @@
-package com.example.apigames.ui.screens.searchgameview
+package com.example.apigames.ui.screens.homeScreen
 
 
 import androidx.compose.foundation.clickable
@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.apigames.ui.screens.homeScreen.HomeViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)

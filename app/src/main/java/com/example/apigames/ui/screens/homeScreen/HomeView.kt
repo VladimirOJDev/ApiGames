@@ -15,15 +15,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apigames.ui.components.CardGame
 import com.example.apigames.ui.components.MainTopBar
 import com.example.apigames.ui.constans.UIConstanst.Companion.CUSTOM_BLACK
+import com.example.apigames.ui.main.GameContentType
 
 
 @Composable
 fun HomeView(
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel,
     onClick: (Int)-> Unit,
     onNavigateSearch:()-> Unit
     ){
@@ -36,7 +36,7 @@ fun HomeView(
             )
         }
     ) { padding->
-        ContentHomeView(homeViewModel,padding, onClick)
+        ContentHomeView(homeViewModel, GameContentType.LIST_ONLY,padding, onClick)
 
     }
 
@@ -45,6 +45,7 @@ fun HomeView(
 @Composable
 fun ContentHomeView(
     homeViewModel: HomeViewModel,
+    contentType: GameContentType,
     padding: PaddingValues,
     onClick:(Int)-> Unit
 ){
@@ -54,7 +55,17 @@ fun ContentHomeView(
     LazyColumn(modifier = Modifier.padding(padding).background(Color(CUSTOM_BLACK))){
         items(listGames){item->
             CardGame(
-              game = item, onclick = {onClick(item.id)}
+              game = item,
+
+                onclick = {
+                    when(contentType){
+                        GameContentType.LIST_ONLY -> {onClick(item.id)}
+                        GameContentType.LIST_AND_DETAIL -> {
+                            homeViewModel.cleanState()
+                            homeViewModel.getGameById(item.id)
+                        }
+                    }
+                }
             )
             Text(
                 text = item.name,

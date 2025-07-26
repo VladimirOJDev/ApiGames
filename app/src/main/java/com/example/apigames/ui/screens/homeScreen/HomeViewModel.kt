@@ -53,7 +53,8 @@ class HomeViewModel @Inject constructor(
                         descriptionRaw = result.data?.descriptionRaw ?: "",
                         metaCritic = result.data?.metaCritic ?: 111, //llega hasta el 100 entonces 111 no tiene calificacion
                         website = result.data?.website?: "Sin WebSite",
-                        backgroundImage = result.data?.backgroundImage?:""
+                        backgroundImage = result.data?.backgroundImage?:"",
+                        id = id
 
                     )
                 }
@@ -69,7 +70,12 @@ class HomeViewModel @Inject constructor(
             descriptionRaw =  "",
             metaCritic = 111,
             website = "",
-            backgroundImage = ""
+            backgroundImage = "",
+            id = null
         )
+    }
+
+    fun upDateIdState(id: Int){
+        _uiState.value = _uiState.value.copy(id = id)
     }
 }

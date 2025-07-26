@@ -9,4 +9,5 @@ data class HomeState(
     val metaCritic: Int = 0,
     val website: String = "",
     val backgroundImage: String = "",
+    val id: Int? = null
 )

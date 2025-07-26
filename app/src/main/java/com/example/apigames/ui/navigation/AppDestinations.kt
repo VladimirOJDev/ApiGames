@@ -11,6 +11,7 @@ sealed class AppDestinations{
     @Serializable
     data class DetailView(val id: Int? = null): AppDestinations()
 
+
     @Serializable
     object SearchGameView: AppDestinations()
 }

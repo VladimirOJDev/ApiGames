@@ -22,15 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.apigames.ui.main.GameContentType
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchGameView(
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: HomeViewModel,
     onBackStack:()->Unit,
-    onNavigateDetail: (Int)-> Unit
+    onNavigateDetail: (Int)-> Unit,
+    contentType: GameContentType
 ){
 
     val state by viewModel.uiState.collectAsState()
@@ -75,7 +76,17 @@ fun SearchGameView(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 10.dp, start = 10.dp)
-                        .clickable{onNavigateDetail(it.id)}
+                        .clickable{
+                            when(contentType){
+                                GameContentType.LIST_ONLY ->{onNavigateDetail(it.id)}
+                                GameContentType.LIST_AND_DETAIL -> {
+
+                                    viewModel.getGameById(it.id)
+                                    viewModel.upDateIdState(it.id)
+                                    onBackStack()
+                                }
+                            }
+                        }
                 )
             }
         }

@@ -34,7 +34,7 @@ import com.example.apigames.ui.constans.UIConstanst.Companion.CUSTOM_BLACK
 @Composable
 fun DetailView(
     id: Int?,
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: HomeViewModel,
     onClickBack:()-> Unit
 ){
 
@@ -72,7 +72,6 @@ fun ContentDetailView(
     state: HomeState,
     padding: PaddingValues
 ){
-
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

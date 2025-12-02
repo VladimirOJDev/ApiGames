@@ -50,6 +50,7 @@ fun AppNavGraph(
             val detail: DetailView = backStackEntry.toRoute()
             DetailView(
                 id = detail.id,
+                contentType = contentType,
                 viewModel = viewModel
             ) {
                 navController.popBackStack()

@@ -1,5 +1,6 @@
 package com.example.apigames.ui.screens.homeScreen
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,20 +21,22 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apigames.ui.components.MainTopBar
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.apigames.ui.components.MainImage
+import com.example.apigames.ui.components.MainProgressIndicator
 import com.example.apigames.ui.components.MetaWebSite
 import com.example.apigames.ui.components.ReviewCard
 import com.example.apigames.ui.constans.UIConstanst.Companion.CUSTOM_BLACK
+import com.example.apigames.ui.main.GameContentType
 
 @Composable
 fun DetailView(
     id: Int?,
+    contentType: GameContentType,
     viewModel: HomeViewModel,
     onClickBack:()-> Unit
 ){
@@ -44,10 +47,10 @@ fun DetailView(
         if (id != null)
             viewModel.getGameById(id)
     }
-
     DisposableEffect(Unit){//Se ejecuta cuando sale de compisable
         onDispose {
-            viewModel.cleanState()
+            if (contentType ==GameContentType.LIST_ONLY)
+                viewModel.cleanState()
         }
     }
     Scaffold(
@@ -60,45 +63,59 @@ fun DetailView(
             )
         }
     ){
-
-        ContentDetailView(state,it)
-
+        ContentDetailView(viewModel = viewModel, padding = it)
     }
 
 }
 
 @Composable
 fun ContentDetailView(
-    state: HomeState,
+    viewModel: HomeViewModel,
     padding: PaddingValues
 ){
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .background(Color(CUSTOM_BLACK))
-    ) {
-        MainImage(image = state.backgroundImage)
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+    val state by viewModel.uiState.collectAsState()
+    val isLoading = state.isLoadingDetail
+
+    Crossfade(
+        targetState = isLoading
+    ){ isLoad ->
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 5.dp)
+                .fillMaxSize()
+                .padding(padding)
+                .background(Color(CUSTOM_BLACK))
         ){
-            MetaWebSite(state.website)
-            ReviewCard(metScore = state.metaCritic)
+
+            if (isLoad){
+                MainProgressIndicator()
+            }else{
+
+                MainImage(image = state.backgroundImage)
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 5.dp)
+                ){
+                    MetaWebSite(state.website)
+                    ReviewCard(metScore = state.metaCritic)
+                }
+                //Description
+                val scroll = rememberScrollState(0)
+                Text(
+                    text = state.descriptionRaw,
+                    color = Color.White,
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier
+                        .padding(start = 15.dp, end = 15.dp, bottom = 10.dp)
+                        .verticalScroll(scroll)
+                )
+            }
         }
-        //Description
-        val scroll = rememberScrollState(0)
-        Text(
-            text = state.descriptionRaw,
-            color = Color.White,
-            textAlign = TextAlign.Justify,
-            modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 10.dp)
-                .verticalScroll(scroll)
-        )
+
     }
 }

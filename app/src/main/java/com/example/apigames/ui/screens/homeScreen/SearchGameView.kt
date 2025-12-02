@@ -82,7 +82,6 @@ fun SearchGameView(
                                 GameContentType.LIST_AND_DETAIL -> {
 
                                     viewModel.getGameById(it.id)
-                                    viewModel.upDateIdState(it.id)
                                     onBackStack()
                                 }
                             }

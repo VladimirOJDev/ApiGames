@@ -8,20 +8,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apigames.ui.main.GameContentType
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import com.example.apigames.ui.components.MainTopBar
 
 
@@ -32,8 +27,6 @@ fun HomeAndDetailView(
     onNavigateSearch: ()-> Unit
 ){
     val uiState by viewModel.uiState.collectAsState()
-    val id = uiState.id
-
 
     Scaffold(
         topBar = {
@@ -72,24 +65,9 @@ fun HomeAndDetailView(
 
             ){
                 ContentDetailView(
-                    state = uiState,
+                    viewModel= viewModel,
                     padding = it
                 )
-//                if (id ==null){
-//                    Text(
-//                        text = "Sin reseal",
-//                        color = Color.White,
-//                        fontSize = 38.sp,
-//                        fontWeight = FontWeight.Bold
-//
-//                        )
-//                }else{
-//                    ContentDetailView(
-//                        state = uiState,
-//                        padding = it
-//                    )
-//                }
-
             }
         }
     }

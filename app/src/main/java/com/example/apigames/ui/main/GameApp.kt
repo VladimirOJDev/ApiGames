@@ -7,7 +7,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.apigames.ui.screens.homeScreen.HomeViewModel
 
-
+//Controla el flujo de renderizado de la aplicación dependiendo del tamaño de pantalla
+//Pasa por parametro el viewmodel para tener una sola instancia
+//Proporciona el navController para la navegacion
 @Composable
 fun GameApp(
     windowsSize: WindowWidthSizeClass,

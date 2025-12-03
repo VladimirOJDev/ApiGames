@@ -29,7 +29,7 @@ interface ApiGame {
     ): Response<GameDto> //Funcion suspendida para llamar a  los juegos
 
 /*
-*Obtiene un jugego dependiendo su id y nos trae los daos que decalramos en SingleGame
+*Obtiene un juego dependiendo su id y nos trae los datos que declaramos en SingleGame
 * */
     @GET("$ENDPOINT/{id}")
     suspend fun getGameById(

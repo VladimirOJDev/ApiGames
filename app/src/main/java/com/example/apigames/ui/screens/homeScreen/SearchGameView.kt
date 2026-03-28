@@ -2,6 +2,8 @@ package com.example.apigames.ui.screens.homeScreen
 
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -9,8 +11,10 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -41,52 +45,66 @@ fun SearchGameView(
     // Estado para controlar si la barra de búsqueda está expandida (activa)
     var expanded by remember{ mutableStateOf(false) }
 
-    SearchBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        inputField = {
-            // Campo de entrada del SearchBar
-            SearchBarDefaults.InputField(
-                query = query,
-                onQueryChange = { query = it },
-                onSearch = { expanded = false }, // Cierra el SearchBar al buscar
-                expanded = expanded, // Controla la expansión del InputField
-                onExpandedChange = { expanded = it },
-                placeholder = { Text("Buscar") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                trailingIcon = {
-                    Icon(
-                        Icons.Default.Close,
-                        contentDescription = null,
-                        modifier = Modifier.clickable { onBackStack() }
+    Surface(
+        modifier = Modifier.fillMaxSize(), // Ocupa todo el espacio
+        color = androidx.compose.material3.MaterialTheme.colorScheme.background // Fondo del tema
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            SearchBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(if (!expanded) 16.dp else 0.dp),
+                colors = SearchBarDefaults.colors(
+                    containerColor = androidx.compose.material3.MaterialTheme.colorScheme.surface,
+                    // Esto asegura que el fondo sea el del tema (oscuro en Dark Mode)
+                ),
+                inputField = {
+                    // Campo de entrada del SearchBar
+                    SearchBarDefaults.InputField(
+                        query = query,
+                        onQueryChange = { query = it },
+                        onSearch = { expanded = false }, // Cierra el SearchBar al buscar
+                        expanded = expanded, // Controla la expansión del InputField
+                        onExpandedChange = { expanded = it },
+                        placeholder = { Text("Buscar") },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                        trailingIcon = {
+                            Icon(
+                                Icons.Default.Close,
+                                contentDescription = null,
+                                modifier = Modifier.clickable { onBackStack() }
+                            )
+                        },
                     )
                 },
-            )
-        },
-        expanded = expanded, // Controla la expansión del SearchBar principal
-        onExpandedChange = { expanded = it },
-        // Este es el bloque de contenido que aparece cuando el SearchBar está expandido.
-        // En tu ejemplo lo dejaste vacío, así que aquí también está vacío.
-    ) {
-        if (query.isNotEmpty()){
-            val filterGames = games.filter { it.name.contains(query, ignoreCase = true) }
-            filterGames.forEach {
-                Text(text = it.name,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 10.dp, start = 10.dp)
-                        .clickable{
-                            when(contentType){
-                                GameContentType.LIST_ONLY ->{onNavigateDetail(it.id)}
-                                GameContentType.LIST_AND_DETAIL -> {
+                expanded = expanded, // Controla la expansión del SearchBar principal
+                onExpandedChange = { expanded = it },
+                // Este es el bloque de contenido que aparece cuando el SearchBar está expandido.
+                // En tu ejemplo lo dejaste vacío, así que aquí también está vacío.
+            ) {
+                if (query.isNotEmpty()){
+                    val filterGames = games.filter { it.name.contains(query, ignoreCase = true) }
+                    filterGames.forEach {
+                        Text(text = it.name,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.padding(bottom = 10.dp, start = 10.dp)
+                                .clickable{
+                                    when(contentType){
+                                        GameContentType.LIST_ONLY ->{onNavigateDetail(it.id)}
+                                        GameContentType.LIST_AND_DETAIL -> {
 
-                                    viewModel.getGameById(it.id)
-                                    onBackStack()
+                                            viewModel.getGameById(it.id)
+                                            onBackStack()
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                )
+                        )
+                    }
+                }
             }
         }
     }

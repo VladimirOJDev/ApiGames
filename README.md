@@ -7,12 +7,6 @@
 
 ## ✨ Características Principales
 
-BiblioCine no es solo un catálogo, es una experiencia completa para amantes del cine que incluye:
-
-* ** Exploración Dinámica:** Catálogo actualizado con búsqueda reactiva de títulos.
-* ** UI Adaptativa (Multi-dispositivo):** Implementación de layouts específicos para móviles, tablets y dispositivos plegables.
-* ** Arquitectura Robusta:** Separación estricta de responsabilidades para facilitar el testing y la escalabilidad.
-* ** Gestión de Estados:** Manejo de estados de carga, error y éxito mediante programación reactiva.
 
 ## 🏗️ Arquitectura y Estructura del Proyecto
 

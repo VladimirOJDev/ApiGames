@@ -51,9 +51,48 @@ El sistema detecta dinámicamente el tamaño de la ventana mediante `WindowSizeC
   
 ---
 
-## ⚙️ Instalación
 
-1.  Clona el repositorio: `git clone https://github.com/VladimirOJDev/ApiGames.git`
-2.  Registra tu API Key en [RAWG.io](https://rawg.io/apidocs).
-3.  Agrega tu llave en `local.properties`: `API_KEY=tu_llave_aqui`.
-4.  Compila y ejecuta en Android Studio.
+## ⚙️ Instalación y Configuración
+
+Para ejecutar este proyecto localmente y configurar tu propia llave de API, sigue estos pasos:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/VladimirOJDev/ApiGames.git
+   ```
+2. **Configurar la API Key (RAWG API):**
+    Este proyecto utiliza BuildConfig para mantener las llaves seguras. Abre el archivo local.properties en la raíz de tu proyecto y añade la siguiente línea:
+   ```bash
+    API_KEY=tu_api_key_aqui
+    ```
+3. Cambiar las variables de entorno (The MovieDB)
+   Abre el archivo .env y añade tu llave:
+    ```bash
+    MOVIE_DB_KEY=tu_api_key_aqui
+    ```
+4. Instalar dependencias y limpiar caché de Gradle:
+   ```bash
+   ./gradlew clean
+    ```
+5. Generar código y construir el proyecto
+   ```bash
+    ./gradlew assembleDebug
+    ```
+6. Ejecutar la aplicación
+   Asegúrate de tener un emulador abierto o un dispositivo conectado:
+      ```bash
+    ./gradlew installDebug
+    ```
+      
+## 🔐 Configuración de API Key
+
+El proyecto utiliza `BuildConfig` para gestionar las credenciales de forma segura y evitar que se filtren en el control de versiones.
+
+1. **Obtener Credenciales:**
+   Regístrate en [RAWG.io](https://rawg.io/apidocs) para obtener tu propia `API_KEY`.
+
+2. **Configurar local.properties:**
+   En la raíz del proyecto, abre (o crea) el archivo `local.properties` y añade la siguiente variable:
+   ```properties
+   API_KEY=tu_api_key_aqui
+---
